@@ -31,7 +31,7 @@ export class RoutesController {
 
   @Get(':id')
   async findOne(@Param('id') id: string) {
-    const route = await this.routesService.findOne(id);
+    const route = await this.routesService.findOne(1);
     return route;
   }
 

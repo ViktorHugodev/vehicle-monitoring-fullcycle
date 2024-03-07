@@ -7,7 +7,14 @@ GET http://localhost:3333/routes/1
 ###
 POST http://localhost:3333/routes
 Content-Type: application/json
-{
 
+{
+  "name": "Routa 01 test",
+  "sourceName":"Minha casa",
+  "sourceLat":-16.7080426,
+  "sourceLng": -43.8624512,
+  "destinationName": "Morada parque",
+  "destinationLat": -16.7456104,
+  "destinationLng":-43.8948308
 }
 ###
