@@ -1,0 +1,18 @@
+version: '3'
+
+services:
+  mysql_full:
+    image: mysql:8
+    container_name: mysql_full
+    restart: always
+    env_file:
+      - .env
+    ports:
+      - 3306:3306
+    environment:
+      - MYSQL_ROOT_PASSWORD=secret
+      - MYSQL_DATABASE=fullcycle
+    volumes:
+      - ./data/db:/var/lib/mysql
+
+

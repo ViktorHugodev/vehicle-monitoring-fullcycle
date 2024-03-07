@@ -1,0 +1,47 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Route {
+  id              String        @id @default(uuid()) // MySQL usa UUID ou AUTO_INCREMENT
+  name            String
+  sourceName      String // Alterado para campos escalares
+  sourceLat       Float
+  sourceLng       Float
+  destinationName String
+  destinationLat  Float
+  destinationLng  Float
+  distance        Float
+  duration        Float
+  directions      String        @db.Text // Json convertido para Texto
+  created_at      DateTime      @default(now())
+  updated_at      DateTime      @updatedAt
+  RouteDriver     RouteDriver[]
+
+  @@map("routes") // Opcional: especifica o nome da tabela no DB
+}
+
+model RouteDriver {
+  id         String   @id @default(uuid())
+  route      Route    @relation(fields: [route_id], references: [id])
+  route_id   String
+  points     String   @db.Text // Json ou formato de string para armazenar pontos
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  status     String // Adicionado para armazenar status
+
+  @@map("route_drivers")
+}
+
+// Os tipos Point, Place e Coord foram removidos e integrados
