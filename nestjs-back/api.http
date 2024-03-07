@@ -1,1 +1,13 @@
-GET http://localhost:3001/api/places
+GET http://localhost:3333/routes
+
+###
+GET http://localhost:3333/routes/1
+
+
+###
+POST http://localhost:3333/routes
+Content-Type: application/json
+{
+
+}
+###
