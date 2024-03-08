@@ -10,7 +10,6 @@ import {
 import { RoutesService } from './routes.service';
 import { CreateRouteDto } from './dto/create-route.dto';
 import { UpdateRouteDto } from './dto/update-route.dto';
-import { RouteSerializer } from './route.serializer';
 
 @Controller('routes')
 export class RoutesController {
@@ -18,9 +17,12 @@ export class RoutesController {
 
   @Post()
   async create(@Body() createRouteDto: CreateRouteDto) {
+    console.log(
+      '🚀 ~ RoutesController ~ create ~ createRouteDto:',
+      createRouteDto,
+    );
     //DTO - Data Transfer Object
-    const route = await this.routesService.create(createRouteDto);
-    return route;
+    return await this.routesService.create(createRouteDto);
   }
 
   @Get()
@@ -31,7 +33,7 @@ export class RoutesController {
 
   @Get(':id')
   async findOne(@Param('id') id: string) {
-    const route = await this.routesService.findOne(1);
+    const route = await this.routesService.findOne(id);
     return route;
   }
 
