@@ -42,7 +42,7 @@ model RouteDriver {
   points     String   @db.Text // Json ou formato de string para armazenar pontos
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
-  status     String // Adicionado para armazenar status
+  status     String? // Adicionado para armazenar status
 
   @@map("route_drivers")
 }
