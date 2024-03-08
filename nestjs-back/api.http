@@ -17,4 +17,13 @@ Content-Type: application/json
   "destinationLat": -16.7456104,
   "destinationLng":-43.8948308
 }
-###
+
+
+### Coisas do mapa
+
+### Pegar o place_id
+GET http://localhost:3333/places?text=av governador valadares, betim, 1030
+
+
+### Pegar direções entre 2 pontos
+GET http://localhost:3000/directions?originId=EkZBdi4gR292LiBWYWxhZGFyZXMsIDEwMDAgLSBTYW50byBBZm9uc28sIEJldGltIC0gTUcsIDMyNjIzLTU3NSwgQnJhc2lsIjESLwoUChIJja7gMwfdpgARgN9V_RFivpEQ6AcqFAoSCfmsiD4H3aYAEdRlj37c-uzz&destinationId=EkZBdi4gR292LiBWYWxhZGFyZXMsIDEwMzAgLSBTYW50byBBZm9uc28sIEJldGltIC0gTUcsIDMyNjIzLTY5MCwgQnJhc2lsIjESLwoUChIJTbH1swDdpgARYOtQ1DjwovIQhggqFAoSCfmsiD4H3aYAEdRlj37c-uzz
