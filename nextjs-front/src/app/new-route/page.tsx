@@ -45,22 +45,25 @@ export function NewRoutePage() {
     const directionsResponse = await fetch(
       `http://localhost:3333/directions?originId=${placeSourceId}&destinationId=${placeDestinationId}`,
     )
+
     const directionsData: DirectionsResponseData & { request: any } =
       await directionsResponse.json()
+    console.log('🚀 ~ searchPlaces ~ directionsData:', directionsData)
+
     setDirectionsData(directionsData)
-    map?.removeAllRoutes()
-    await map?.addRouteWithIcons({
-      routeId: '1',
-      startMarkerOptions: {
-        position: directionsData.routes[0].legs[0].start_location,
-      },
-      endMarkerOptions: {
-        position: directionsData.routes[0].legs[0].end_location,
-      },
-      carMarkerOptions: {
-        position: directionsData.routes[0].legs[0].start_location,
-      },
-    })
+    // map?.removeAllRoutes()
+    // await map?.addRouteWithIcons({
+    //   routeId: '1',
+    //   startMarkerOptions: {
+    //     position: directionsData.routes[0].legs[0].start_location,
+    //   },
+    //   endMarkerOptions: {
+    //     position: directionsData.routes[0].legs[0].end_location,
+    //   },
+    //   carMarkerOptions: {
+    //     position: directionsData.routes[0].legs[0].start_location,
+    //   },
+    // })
   }
 
   async function createRoute() {
@@ -77,6 +80,7 @@ export function NewRoutePage() {
         destination_id: directionsData!.request.destination.place_id,
       }),
     })
+    console.log('🚀 ~ createRoute ~ response:', response)
     const route = await response.json()
   }
 
@@ -91,14 +95,18 @@ export function NewRoutePage() {
           <div>
             <input id='destination' type='text' placeholder='destino' className='p-1 text-black' />
           </div>
-          <button type='submit'>Pesquisar</button>
+          <button className='bg-gray-400 p-2 border rounded-sm' type='submit'>
+            Pesquisar
+          </button>
         </form>
         {directionsData && (
           <ul>
             <li>Origem {directionsData.routes[0].legs[0].start_address}</li>
             <li>Destino {directionsData.routes[0].legs[0].end_address}</li>
             <li>
-              <button onClick={createRoute}>Criar rota</button>
+              <button className='bg-gray-400 p-2 border rounded-sm' onClick={createRoute}>
+                Criar rota
+              </button>
             </li>
           </ul>
         )}
