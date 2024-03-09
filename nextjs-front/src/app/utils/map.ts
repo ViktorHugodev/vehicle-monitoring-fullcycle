@@ -155,7 +155,7 @@ export class Map {
   }
 
   moveCar(routeId: string, position: google.maps.LatLngLiteral) {
-    this.routes[routeId].carMarker.setPosition(position)
+    this.routes[routeId]?.carMarker?.setPosition(position)
   }
 
   removeRoute(id: string) {
