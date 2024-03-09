@@ -39,11 +39,11 @@ export function NewRoutePage() {
       return
     }
 
-    const placeSourceId = sourcePlace.candidates[0].place_id
-    const placeDestinationId = destinationPlace.candidates[0].place_id
+    const sourceId = sourcePlace.candidates[0].place_id
+    const destinationId = destinationPlace.candidates[0].place_id
 
     const directionsResponse = await fetch(
-      `http://localhost:3333/directions?originId=${placeSourceId}&destinationId=${placeDestinationId}`,
+      `http://localhost:3333/directions?originId=${sourceId}&destinationId=${destinationId}`,
     )
 
     const directionsData: DirectionsResponseData & { request: any } =
@@ -85,9 +85,9 @@ export function NewRoutePage() {
   }
 
   return (
-    <div className='flex h-100 w-100 p-2'>
-      <div>
-        <h1>Nova rota</h1>
+    <div className='flex h-full w-100  border border-red-100'>
+      <div className='p-2'>
+        <h1 className='text-slate-200 font-bold text-center'>Nova rota</h1>
         <form className='flex flex-col gap-2' onSubmit={searchPlaces}>
           <div>
             <input id='source' type='text' placeholder='origem' className='p-1 text-black' />
@@ -100,7 +100,7 @@ export function NewRoutePage() {
           </button>
         </form>
         {directionsData && (
-          <ul>
+          <ul className='border rounded-sm text-slate-200 flex flex-col gap-4'>
             <li>Origem {directionsData.routes[0].legs[0].start_address}</li>
             <li>Destino {directionsData.routes[0].legs[0].end_address}</li>
             <li>
@@ -111,11 +111,14 @@ export function NewRoutePage() {
           </ul>
         )}
       </div>
+
       <div
         id='map'
         style={{
           height: '100%',
           width: '100%',
+          border: '1px solid pink',
+          backgroundColor: '#fff',
         }}
         ref={mapContainerRef}
       ></div>
