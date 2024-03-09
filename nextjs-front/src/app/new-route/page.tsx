@@ -51,19 +51,19 @@ export function NewRoutePage() {
     console.log('🚀 ~ searchPlaces ~ directionsData:', directionsData)
 
     setDirectionsData(directionsData)
-    // map?.removeAllRoutes()
-    // await map?.addRouteWithIcons({
-    //   routeId: '1',
-    //   startMarkerOptions: {
-    //     position: directionsData.routes[0].legs[0].start_location,
-    //   },
-    //   endMarkerOptions: {
-    //     position: directionsData.routes[0].legs[0].end_location,
-    //   },
-    //   carMarkerOptions: {
-    //     position: directionsData.routes[0].legs[0].start_location,
-    //   },
-    // })
+    map?.removeAllRoutes()
+    await map?.addRouteWithIcons({
+      routeId: '1',
+      startMarkerOptions: {
+        position: directionsData.routes[0].legs[0].start_location,
+      },
+      endMarkerOptions: {
+        position: directionsData.routes[0].legs[0].end_location,
+      },
+      carMarkerOptions: {
+        position: directionsData.routes[0].legs[0].start_location,
+      },
+    })
   }
 
   async function createRoute() {
@@ -76,12 +76,27 @@ export function NewRoutePage() {
       },
       body: JSON.stringify({
         name: `${startAddress} - ${endAddress}`,
-        source_id: directionsData!.request.origin.place_id,
-        destination_id: directionsData!.request.destination.place_id,
+        sourceId: directionsData!.request.origin.place_id,
+        destinationId: directionsData!.request.destination.place_id,
       }),
     })
-    console.log('🚀 ~ createRoute ~ response:', response)
+
     const route = await response.json()
+    console.log('🚀 ~ createRoute ~ route:', route)
+    return route
+  }
+  function calculateRoutePrice() {
+    if (!directionsData) return
+    const distanceInKm = directionsData.routes[0].legs[0].distance.value / 1000 // Convertendo de metros para quilômetros
+    const pricePerKm = 3 // R$3,00 por quilômetro
+    const totalPrice = distanceInKm * pricePerKm
+
+    // Formatando o resultado para moeda brasileira (Reais)
+    const formattedPrice = totalPrice.toLocaleString('pt-BR', {
+      style: 'currency',
+      currency: 'BRL',
+    })
+    return formattedPrice
   }
 
   return (
@@ -103,6 +118,14 @@ export function NewRoutePage() {
           <ul className='border rounded-sm text-slate-200 flex flex-col gap-4'>
             <li>Origem {directionsData.routes[0].legs[0].start_address}</li>
             <li>Destino {directionsData.routes[0].legs[0].end_address}</li>
+            <li>Distância: {directionsData.routes[0].legs[0].distance.text}</li>
+            <li>Custo da rota em R$: {calculateRoutePrice()} </li>
+            <li>
+              <span className='text-sm text-slate-400'>
+                o custo da rota é a distancia em km x o valor do km dividido pela quantidade de
+                alunos
+              </span>
+            </li>
             <li>
               <button className='bg-gray-400 p-2 border rounded-sm' onClick={createRoute}>
                 Criar rota
