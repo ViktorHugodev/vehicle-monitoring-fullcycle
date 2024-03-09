@@ -23,7 +23,8 @@ export class RoutesController {
       createRouteDto,
     );
     //DTO - Data Transfer Object
-    return await this.routesService.create(createRouteDto);
+    const route = await this.routesService.create(createRouteDto);
+    return new RouteSerializer(route);
   }
 
   @Get()

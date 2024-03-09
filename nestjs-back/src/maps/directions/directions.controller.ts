@@ -11,7 +11,7 @@ export class DirectionsController {
     @Query('originId') originId: string,
     @Query('destinationId') destinationId: string,
   ) {
-    console.log('directions controller');
+    console.log('directions controller', originId, destinationId);
     return this.directionsService.getDirections(originId, destinationId);
   }
 }

@@ -27,7 +27,6 @@ export class DirectionsService {
     const { data } = await this.googleMapsClient.directions({
       params: requestParams,
     });
-    console.log('🚀 ~ DirectionsService ~ getDirections ~ data:', data);
     return {
       ...data,
       request: {
