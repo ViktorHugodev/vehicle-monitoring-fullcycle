@@ -13,11 +13,6 @@ export function NewRoutePage() {
   const map = useMap(mapContainerRef)
   const [directionsData, setDirectionsData] = useState<DirectionsResponseData & { request: any }>()
 
-  useEffect(() => {
-    socket.connect()
-    socket.emit('message')
-  }, [])
-
   async function searchPlaces(event: FormEvent) {
     event.preventDefault()
     const source = (document.getElementById('source') as HTMLInputElement).value
