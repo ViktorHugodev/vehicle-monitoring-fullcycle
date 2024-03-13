@@ -4,13 +4,19 @@ import type {
   DirectionsResponseData,
   FindPlaceFromTextResponseData,
 } from '@googlemaps/google-maps-services-js'
-import { FormEvent, useRef, useState } from 'react'
+import { FormEvent, useEffect, useRef, useState } from 'react'
 import { useMap } from '../hooks/useMap'
+import { socket } from '../utils/socket-io'
 
 export function NewRoutePage() {
   const mapContainerRef = useRef<HTMLDivElement>(null)
   const map = useMap(mapContainerRef)
   const [directionsData, setDirectionsData] = useState<DirectionsResponseData & { request: any }>()
+
+  useEffect(() => {
+    socket.connect()
+    socket.emit('message')
+  }, [])
 
   async function searchPlaces(event: FormEvent) {
     event.preventDefault()
