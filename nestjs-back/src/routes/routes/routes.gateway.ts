@@ -1,5 +1,6 @@
 import { SubscribeMessage, WebSocketGateway } from '@nestjs/websockets';
 import { Socket } from 'socket.io';
+import { RoutesDriverService } from '../routes-driver/routes-driver.service';
 //import { RoutesDriverService } from '../routes-driver/routes-driver.service';
 
 @WebSocketGateway({
@@ -8,7 +9,7 @@ import { Socket } from 'socket.io';
   },
 })
 export class RoutesGateway {
-  //constructor(private routesDriverService: RoutesDriverService) {}
+  constructor(private routesDriverService: RoutesDriverService) {}
 
   // constructor(@InjectQueue('new-points') private newPointsQueue: Queue) {}
   // Puxar pelo token jwt aqui

@@ -13,11 +13,13 @@ export function AdminPage() {
     socket.connect()
 
     socket.on('admin-new-points', async (data: { route_id: string; lat: number; lng: number }) => {
-      console.log(data)
+      console.log('🚀 ~ socket.on ~ data:', data)
+
       if (!map?.hasRoute(data.route_id)) {
         const response = await fetch(
           `${process.env.NEXT_PUBLIC_NEXT_API_URL}/routes/${data.route_id}`,
         )
+        console.log('🚀 ~ socket.on ~ response:', response)
         const route: Route = await response.json()
         map?.removeRoute(data.route_id)
         await map?.addRouteWithIcons({
