@@ -18,6 +18,7 @@ export class RoutesDriverService {
     });
 
     if (existingRouteDriver) {
+      console.log('Ja existe route driver');
       const updatedPoints = existingRouteDriver.points
         ? JSON.parse(existingRouteDriver.points)
         : [];
@@ -32,6 +33,7 @@ export class RoutesDriverService {
       });
     } else {
       // Se não existir, crie um novo RouteDriver...
+      console.log('não existe route driver');
       const initialPoints = [
         { location: { lat: dto.lat, lng: dto.lng }, created_at: new Date() },
       ];
