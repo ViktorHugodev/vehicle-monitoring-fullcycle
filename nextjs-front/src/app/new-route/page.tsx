@@ -101,52 +101,60 @@ export function NewRoutePage() {
   }
 
   return (
-    <div className='flex h-full w-100  border border-red-100'>
-      <div className='p-2'>
-        <h1 className='text-slate-200 font-bold text-center'>Nova rota</h1>
-        <form className='flex flex-col gap-2' onSubmit={searchPlaces}>
-          <div>
-            <input id='source' type='text' placeholder='origem' className='p-1 text-black' />
-          </div>
-          <div>
-            <input id='destination' type='text' placeholder='destino' className='p-1 text-black' />
-          </div>
-          <button className='bg-gray-400 p-2 border rounded-sm' type='submit'>
-            Pesquisar
-          </button>
-        </form>
-        {directionsData && (
-          <ul className='border rounded-sm text-slate-200 flex flex-col gap-4'>
-            <li>Origem {directionsData.routes[0].legs[0].start_address}</li>
-            <li>Destino {directionsData.routes[0].legs[0].end_address}</li>
-            <li>Distância: {directionsData.routes[0].legs[0].distance.text}</li>
-            <li>Custo da rota em R$: {calculateRoutePrice()} </li>
-            <li>
-              <span className='text-sm text-slate-400'>
-                o custo da rota é a distancia em km x o valor do km dividido pela quantidade de
-                alunos
-              </span>
-            </li>
-            <li>
-              <button className='bg-gray-400 p-2 border rounded-sm' onClick={createRoute}>
-                Criar rota
-              </button>
-            </li>
-          </ul>
-        )}
-      </div>
+    <>
+      <title>New-Route</title>
+      <div className='flex h-full w-100  border border-red-100'>
+        <div className='p-2'>
+          <h1 className='text-slate-200 font-bold text-center'>Nova rota</h1>
+          <form className='flex flex-col gap-2' onSubmit={searchPlaces}>
+            <div>
+              <input id='source' type='text' placeholder='origem' className='p-1 text-black' />
+            </div>
+            <div>
+              <input
+                id='destination'
+                type='text'
+                placeholder='destino'
+                className='p-1 text-black'
+              />
+            </div>
+            <button className='bg-gray-400 p-2 border rounded-sm' type='submit'>
+              Pesquisar
+            </button>
+          </form>
+          {directionsData && (
+            <ul className='border rounded-sm text-slate-200 flex flex-col gap-4'>
+              <li>Origem {directionsData.routes[0].legs[0].start_address}</li>
+              <li>Destino {directionsData.routes[0].legs[0].end_address}</li>
+              <li>Distância: {directionsData.routes[0].legs[0].distance.text}</li>
+              <li>Custo da rota em R$: {calculateRoutePrice()} </li>
+              <li>
+                <span className='text-sm text-slate-400'>
+                  o custo da rota é a distancia em km x o valor do km dividido pela quantidade de
+                  alunos
+                </span>
+              </li>
+              <li>
+                <button className='bg-gray-400 p-2 border rounded-sm' onClick={createRoute}>
+                  Criar rota
+                </button>
+              </li>
+            </ul>
+          )}
+        </div>
 
-      <div
-        id='map'
-        style={{
-          height: '100%',
-          width: '100%',
-          border: '1px solid pink',
-          backgroundColor: '#fff',
-        }}
-        ref={mapContainerRef}
-      ></div>
-    </div>
+        <div
+          id='map'
+          style={{
+            height: '100%',
+            width: '100%',
+            border: '1px solid pink',
+            backgroundColor: '#fff',
+          }}
+          ref={mapContainerRef}
+        ></div>
+      </div>
+    </>
   )
 }
 

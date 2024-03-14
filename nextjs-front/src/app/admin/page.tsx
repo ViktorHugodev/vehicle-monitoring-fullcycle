@@ -4,6 +4,7 @@ import { useEffect, useRef } from 'react'
 import { useMap } from '../hooks/useMap'
 import { Route } from '../utils/model'
 import { socket } from '../utils/socket-io'
+import Head from 'next/head'
 
 export function AdminPage() {
   const mapContainerRef = useRef<HTMLDivElement>(null)
@@ -47,18 +48,22 @@ export function AdminPage() {
   }, [map])
 
   return (
-    <div className='flex h-full w-100 '>
-      <div
-        id='map'
-        style={{
-          height: '100%',
-          width: '100%',
-          border: '1px solid pink',
-          backgroundColor: '#fff',
-        }}
-        ref={mapContainerRef}
-      ></div>
-    </div>
+    <>
+      {' '}
+      <title>Admin</title>
+      <div className='flex h-full w-100 '>
+        <div
+          id='map'
+          style={{
+            height: '100%',
+            width: '100%',
+            border: '1px solid pink',
+            backgroundColor: '#fff',
+          }}
+          ref={mapContainerRef}
+        ></div>
+      </div>
+    </>
   )
 }
 

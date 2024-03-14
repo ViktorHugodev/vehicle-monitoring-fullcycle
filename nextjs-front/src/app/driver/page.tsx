@@ -92,6 +92,7 @@ export function DriverPage() {
         }}
         ref={mapContainerRef}
       ></div>
+      <title>Driver</title>
     </div>
   )
 }
