@@ -1,3 +1,5 @@
+import { Navbar } from './components/Navbar'
+import ThemeRegistry from './components/ThemeRegistry/ThemeRegistry'
 import './globals.css'
 import type { Metadata } from 'next'
 
@@ -15,9 +17,12 @@ export default function RootLayout({
 }) {
   return (
     <html lang='en'>
-      <title>{title}</title>
-
-      <body className='bg-gray-900 h-screen flex flex-col dark'> {children}</body>
+      <body>
+        <ThemeRegistry>
+          <Navbar />
+          {children}
+        </ThemeRegistry>
+      </body>
     </html>
   )
 }

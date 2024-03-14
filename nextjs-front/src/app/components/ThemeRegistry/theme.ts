@@ -1,21 +1,26 @@
-import { createTheme } from "@mui/material/styles";
-import { Roboto } from "next/font/google";
+import { createTheme } from '@mui/material/styles'
+import { Roboto } from 'next/font/google'
 
 const roboto = Roboto({
-  weight: ["300", "400", "500", "700"],
-  subsets: ["latin"],
-  display: "swap",
-});
+  weight: ['300', '400', '500', '700'],
+  subsets: ['latin'],
+  display: 'swap',
+})
 
 const defaultTheme = createTheme({
   palette: {
-    mode: "dark",
+    mode: 'dark',
     primary: {
-      main: "#FFCD00",
-      contrastText: "#242526",
+      main: '#90CAF9', // Um azul claro agradável e calmante, ótimo para uma aparência fresca e moderna
+      contrastText: '#0D1B2A', // Um azul-marinho profundo para garantir uma legibilidade ótima no azul claro
+    },
+    secondary: {
+      main: '#FFE082', // Um amarelo claro como cor secundária para complementar o azul sem competir por atenção
+      contrastText: '#0D1B2A', // Azul-marinho para o texto sobre o amarelo claro, mantendo a consistência e a legibilidade
     },
     background: {
-      default: "#242526",
+      default: '#0D1B2A', // Um azul-marinho como cor de fundo, oferecendo profundidade e complementando o azul claro
+      paper: '#11263C', // Um tom ligeiramente mais claro que o fundo para elementos como cartões, para sutil diferenciação
     },
   },
   typography: {
@@ -24,23 +29,23 @@ const defaultTheme = createTheme({
   components: {
     MuiCssBaseline: {
       styleOverrides: {
-        "html, body": {
-          minHeight: "100vh",
-          display: "flex",
+        'html, body': {
+          minHeight: '100vh',
+          display: 'flex',
           flex: 1,
-          flexDirection: "column",
+          flexDirection: 'column',
         },
       },
     },
     MuiAppBar: {
       styleOverrides: {
         colorPrimary: {
-          backgroundColor: "#FFCD00",
-          color: "#242526",
+          backgroundColor: '#90CAF9',
+          color: '#0D1B2A',
         },
       },
     },
   },
-});
+})
 
-export default defaultTheme;
+export default defaultTheme
