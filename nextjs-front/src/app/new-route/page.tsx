@@ -8,20 +8,33 @@ import { FormEvent, useEffect, useRef, useState } from 'react'
 import { useMap } from '../hooks/useMap'
 import { socket } from '../utils/socket-io'
 import Grid2 from '@mui/material/Unstable_Grid2'
+import {
+  Alert,
+  Button,
+  Card,
+  CardActions,
+  CardContent,
+  List,
+  ListItem,
+  ListItemText,
+  Snackbar,
+  TextField,
+  Typography,
+} from '@mui/material'
 
 export function NewRoutePage() {
   const mapContainerRef = useRef<HTMLDivElement>(null)
   const map = useMap(mapContainerRef)
   const [directionsData, setDirectionsData] = useState<DirectionsResponseData & { request: any }>()
-
+  const [open, setOpen] = useState(false)
   async function searchPlaces(event: FormEvent) {
     event.preventDefault()
     const source = (document.getElementById('source') as HTMLInputElement).value
     const destination = (document.getElementById('destination') as HTMLInputElement).value
 
     const [sourceResponse, destinationResponse] = await Promise.all([
-      fetch(`http://localhost:3333/places?text=${source}`),
-      fetch(`http://localhost:3333/places?text=${destination}`),
+      fetch(`${process.env.NEXT_PUBLIC_NEXT_API_URL}/places?text=${source}`),
+      fetch(`${process.env.NEXT_PUBLIC_NEXT_API_URL}/places?text=${destination}`),
     ])
 
     const [sourcePlace, destinationPlace]: FindPlaceFromTextResponseData[] = await Promise.all([
@@ -45,12 +58,11 @@ export function NewRoutePage() {
     const destinationId = destinationPlace.candidates[0].place_id
 
     const directionsResponse = await fetch(
-      `http://localhost:3333/directions?originId=${sourceId}&destinationId=${destinationId}`,
+      `${process.env.NEXT_PUBLIC_NEXT_API_URL}/directions?originId=${sourceId}&destinationId=${destinationId}`,
     )
 
     const directionsData: DirectionsResponseData & { request: any } =
       await directionsResponse.json()
-    console.log('🚀 ~ searchPlaces ~ directionsData:', directionsData)
 
     setDirectionsData(directionsData)
     map?.removeAllRoutes()
@@ -71,7 +83,7 @@ export function NewRoutePage() {
   async function createRoute() {
     const startAddress = directionsData!.routes[0].legs[0].start_address
     const endAddress = directionsData!.routes[0].legs[0].end_address
-    const response = await fetch('http://localhost:3333/routes', {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_NEXT_API_URL}/routes`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -85,6 +97,7 @@ export function NewRoutePage() {
 
     const route = await response.json()
     console.log('🚀 ~ createRoute ~ route:', route)
+    setOpen(true)
     return route
   }
   function calculateRoutePrice() {
@@ -105,37 +118,59 @@ export function NewRoutePage() {
     <>
       <title>New-Route</title>
       <Grid2 container sx={{ display: 'flex', flex: 1 }}>
-        <Grid2 xs={4}>
-          <h1 className='text-slate-200 font-bold text-center'>Nova rota</h1>
+        <Grid2 xs={4} px={2}>
+          <Typography variant='h4'>Nova rota</Typography>
           <form onSubmit={searchPlaces}>
-            <div>
-              <input id='source' type='text' placeholder='origem' />
-            </div>
-            <div>
-              <input id='destination' type='text' placeholder='destino' />
-            </div>
-            <button>Pesquisar</button>
+            <TextField id='source' label='Origem' fullWidth />
+            <TextField id='destination' label='Destino' fullWidth sx={{ mt: 1 }} />
+            <Button variant='contained' type='submit' sx={{ mt: 1 }} fullWidth>
+              Pesquisar
+            </Button>
           </form>
           {directionsData && (
-            <ul>
-              <li>Origem {directionsData.routes[0].legs[0].start_address}</li>
-              <li>Destino {directionsData.routes[0].legs[0].end_address}</li>
-              <li>Distância: {directionsData.routes[0].legs[0].distance.text}</li>
-              <li>Custo da rota em R$: {calculateRoutePrice()} </li>
-              <li>
-                <span>
-                  o custo da rota é a distancia em km x o valor do km dividido pela quantidade de
-                  alunos
-                </span>
-              </li>
-              <li>
-                <button onClick={createRoute}>Criar rota</button>
-              </li>
-            </ul>
+            <Card sx={{ mt: 1 }}>
+              <CardContent>
+                <List>
+                  <ListItem>
+                    <ListItemText
+                      primary={'Origem'}
+                      secondary={directionsData?.routes[0]!.legs[0]!.start_address}
+                    />
+                  </ListItem>
+                  <ListItem>
+                    <ListItemText
+                      primary={'Destino'}
+                      secondary={directionsData?.routes[0]!.legs[0]!.end_address}
+                    />
+                  </ListItem>
+                  <ListItem>
+                    <ListItemText
+                      primary={'Distância'}
+                      secondary={directionsData?.routes[0]!.legs[0]!.distance.text}
+                    />
+                  </ListItem>
+                  <ListItem>
+                    <ListItemText
+                      primary={'Duração'}
+                      secondary={directionsData?.routes[0]!.legs[0]!.duration.text}
+                    />
+                  </ListItem>
+                </List>
+              </CardContent>
+              <CardActions sx={{ display: 'flex', justifyContent: 'center' }}>
+                <Button type='button' variant='contained' onClick={createRoute}>
+                  Adicionar rota
+                </Button>
+              </CardActions>
+            </Card>
           )}
         </Grid2>
-
         <Grid2 id='map' xs={8} ref={mapContainerRef}></Grid2>
+        <Snackbar open={open} autoHideDuration={3000} onClose={() => setOpen(false)}>
+          <Alert onClose={() => setOpen(false)} severity='success'>
+            Rota cadastrada com sucesso
+          </Alert>
+        </Snackbar>
       </Grid2>
     </>
   )

@@ -6,6 +6,9 @@ import useSwr from 'swr'
 import { fetcher } from '../utils/http'
 import { Route } from '../utils/model'
 import { socket } from '../utils/socket-io'
+import { Typography, Button } from '@mui/material'
+import Grid2 from '@mui/material/Unstable_Grid2'
+import { RouteSelect } from '../components/RouteSelect'
 
 export function DriverPage() {
   const mapContainerRef = useRef<HTMLDivElement>(null)
@@ -65,35 +68,18 @@ export function DriverPage() {
   }
 
   return (
-    <div className='flex h-full w-100 '>
-      <div className='w-[20%]'>
-        <h1>Minha viagem</h1>
-        <div>
-          <select id='route'>
-            {isLoading && <option>Carregando rotas...</option>}
-            {routes!.map(route => (
-              <option key={route.id} value={route.id}>
-                {route.name}
-              </option>
-            ))}
-          </select>
-          <button type='submit' className='bg-gray-400 p-2 border rounded-sm' onClick={startRoute}>
+    <Grid2 container sx={{ display: 'flex', flex: 1 }}>
+      <Grid2 xs={4} px={2}>
+        <Typography variant='h4'>Nova rota</Typography>
+        <div style={{ display: 'flex', flexDirection: 'column' }}>
+          <RouteSelect id='route' />
+          <Button variant='contained' onClick={startRoute} fullWidth>
             Iniciar a viagem
-          </button>
+          </Button>
         </div>
-      </div>
-      <div
-        id='map'
-        style={{
-          height: '100%',
-          width: '100%',
-          border: '1px solid pink',
-          backgroundColor: '#fff',
-        }}
-        ref={mapContainerRef}
-      ></div>
-      <title>Driver</title>
-    </div>
+      </Grid2>
+      <Grid2 id='map' xs={8} ref={mapContainerRef}></Grid2>
+    </Grid2>
   )
 }
 
