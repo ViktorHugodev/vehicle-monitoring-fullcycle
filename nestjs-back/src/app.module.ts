@@ -13,7 +13,7 @@ import { BullModule } from '@nestjs/bull';
     PrismaModule,
     BullModule.forRoot({
       redis: {
-        host: 'redis',
+        host: 'localhost',
         port: 6379,
       },
     }),
