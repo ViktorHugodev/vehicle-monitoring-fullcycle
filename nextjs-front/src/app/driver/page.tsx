@@ -2,8 +2,6 @@
 
 import { useEffect, useRef } from 'react'
 import { useMap } from '../hooks/useMap'
-import useSwr from 'swr'
-import { fetcher } from '../utils/http'
 import { Route } from '../utils/model'
 import { socket } from '../utils/socket-io'
 import { Typography, Button } from '@mui/material'
@@ -14,13 +12,6 @@ export function DriverPage() {
   const mapContainerRef = useRef<HTMLDivElement>(null)
   const map = useMap(mapContainerRef)
 
-  const {
-    data: routes,
-    error,
-    isLoading,
-  } = useSwr<Route[]>('http://localhost:3333/routes', fetcher, {
-    fallbackData: [],
-  })
   useEffect(() => {
     socket.connect()
     return () => {

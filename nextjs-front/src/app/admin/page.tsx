@@ -51,14 +51,17 @@ export function AdminPage() {
     <>
       {' '}
       <title>Admin</title>
-      <div className='flex h-full w-100 '>
+      <div
+        style={{
+          height: '100%',
+          width: '100%',
+        }}
+      >
         <div
           id='map'
           style={{
             height: '100%',
             width: '100%',
-            border: '1px solid pink',
-            backgroundColor: '#fff',
           }}
           ref={mapContainerRef}
         ></div>
