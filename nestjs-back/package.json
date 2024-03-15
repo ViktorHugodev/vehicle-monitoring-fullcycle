@@ -31,6 +31,7 @@
     "@nestjs/platform-socket.io": "^10.3.3",
     "@nestjs/websockets": "^10.3.3",
     "@prisma/client": "^5.10.2",
+    "@willsoto/nestjs-prometheus": "^6.0.0",
     "bull": "^4.12.2",
     "kafkajs": "^2.2.4",
     "reflect-metadata": "^0.2.0",
