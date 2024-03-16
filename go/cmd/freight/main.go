@@ -20,7 +20,7 @@ func main() {
 	servers := "host.docker.internal:9094"
 	go kafka.Consume(topics, servers, msgChan)
 
-	db, err := sql.Open("mysql", "root:root@tcp(host.docker.internal:3306)/routes?parseTime=true")
+	db, err := sql.Open("mysql", "root:root@tcp(localhost:3307)/routes?parseTime=true")
 	if err != nil {
 		panic(err)
 	}
@@ -40,7 +40,7 @@ func main() {
 			if err != nil {
 				fmt.Println(err)
 			}
-
+			fmt.Println("RouteCreated", input)
 		case "RouteStarted", "RouteFinished":
 			input := usecase.ChangeRouteStatusInput{}
 			json.Unmarshal(msg.Value, &input)
@@ -48,6 +48,7 @@ func main() {
 			if err != nil {
 				fmt.Println(err)
 			}
+			fmt.Println("RouteStartedOrFinished", input)
 		}
 	}
 }
