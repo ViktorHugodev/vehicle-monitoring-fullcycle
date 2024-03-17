@@ -13,8 +13,8 @@ export class RoutesService {
     private prismaService: PrismaService,
     private directionsService: DirectionsService,
     @InjectQueue('kafka-producer') private kafkaProducerQueue: Queue,
-    // @Inject('KAFKA_SERVICE')
-    // private kafkaService: ClientKafka,
+    @Inject('KAFKA_SERVICE')
+    private kafkaService: ClientKafka,
   ) {}
   async create(createRouteDto: CreateRouteDto) {
     const data = await this.directionsService.getDirections(

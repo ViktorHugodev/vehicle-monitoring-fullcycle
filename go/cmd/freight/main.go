@@ -16,8 +16,8 @@ import (
 
 func main() {
 	msgChan := make(chan *ckafka.Message)
-	topics := []string{"routes"}
-	servers := "host.docker.internal:9094"
+	topics := []string{"route"}
+	servers := "localhost:9092"
 	go kafka.Consume(topics, servers, msgChan)
 
 	db, err := sql.Open("mysql", "root:root@tcp(localhost:3307)/routes?parseTime=true")
