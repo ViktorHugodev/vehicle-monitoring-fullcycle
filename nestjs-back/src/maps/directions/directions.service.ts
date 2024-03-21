@@ -13,12 +13,21 @@ export class DirectionsService {
     private configService: ConfigService,
   ) {}
 
-  async getDirections(sourceId: string, destinationId: string) {
+  async getDirections(
+    sourceId: string,
+    destinationId: string,
+    waypoints?: string[],
+  ) {
     const requestParams: DirectionsRequest['params'] = {
       origin: `place_id:${sourceId.replace('place_id:', '')}`,
       destination: `place_id:${destinationId.replace('place_id:', '')}`,
       mode: TravelMode.driving,
       key: this.configService.get<string>('GOOGLE_MAPS_API_KEY'),
+      ...(waypoints && {
+        waypoints: waypoints.map(
+          (wp) => `place_id:${wp.replace('place_id:', '')}`,
+        ),
+      }), // Incluindo waypoints na solicitação
     };
     console.log(
       '🚀 ~ DirectionsService ~ getDirections ~ requestParams:',

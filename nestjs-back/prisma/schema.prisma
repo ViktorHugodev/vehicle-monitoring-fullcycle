@@ -14,7 +14,7 @@ datasource db {
 }
 
 model Route {
-  id                 String  @id @default(uuid()) // MySQL usa UUID ou AUTO_INCREMENT
+  id                 String        @id @default(uuid()) // MySQL usa UUID ou AUTO_INCREMENT
   name               String
   sourceName         String // Alterado para campos escalares
   sourcePlaceId      String? // Campo adicionado para place_id do ponto de origem
@@ -24,13 +24,13 @@ model Route {
   destinationPlaceId String? // Campo adicionado para place_id do ponto de destino
   destinationLat     Float
   destinationLng     Float
-
-  distance    Float
-  duration    Float
-  directions  String        @db.Text // Json convertido para Texto
-  created_at  DateTime      @default(now())
-  updated_at  DateTime      @updatedAt
-  RouteDriver RouteDriver[]
+  waypoints          Json? // Novo campo para armazenar waypoints como um array JSON
+  distance           Float
+  duration           Float
+  directions         String        @db.Text // Json convertido para Texto
+  created_at         DateTime      @default(now())
+  updated_at         DateTime      @updatedAt
+  RouteDriver        RouteDriver[]
 
   @@map("routes") // Opcional: especifica o nome da tabela no DB
 }

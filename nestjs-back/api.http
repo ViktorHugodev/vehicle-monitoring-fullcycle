@@ -1,69 +1,39 @@
-GET http://localhost:3333/routes
+### Solicitação de Direções Sem Waypoints
+GET http://localhost:3333/directions?originId=ChIJqQMLQ1mrVAcRMZALfnM8ilA&destinationId=ChIJx332MqJTqwARQk4COuTDx_8
 
-###
-GET http://localhost:3333/routes/c81db2b7-63f9-43a4-ba64-d2044cfaa220
+### Solicitação de Direções Com Um Waypoint
+GET http://localhost:3333/directions?originId=ChIJqQMLQ1mrVAcRMZALfnM8ilA&destinationId=ChIJx332MqJTqwARQk4COuTDx_8&waypoints[]=ChIJN1t_tDeuEmsRUsoyG83frY4
 
+### Solicitação de Direções Com Vários Waypoints
+GET http://localhost:3333/directions?originId=ChIJqQMLQ1mrVAcRMZALfnM8ilA&destinationId=ChIJx332MqJTqwARQk4COuTDx_8&waypoints[]=ChIJN1t_tDeuEmsRUsoyG83frY4&waypoints[]=ChIJJ3SpfQsLlVQRkYXR9ua5Nhw
 
-###
+### Criar Rota Sem Waypoints
 POST http://localhost:3333/routes
 Content-Type: application/json
 
 {
-    "name": "route test 1",
-    "sourceId": "ChIJqQMLQ1mrVAcRMZALfnM8ilA",
-    "destinationId": "ChIJx332MqJTqwARQk4COuTDx_8"
+  "name": "Rota com 1 Waypoint",
+  "sourceId": "ChIJqQMLQ1mrVAcRMZALfnM8ilA",
+  "destinationId": "ChIJx332MqJTqwARQk4COuTDx_8",
+  "distance": 7145,
+  "duration": 841,
+  "polyline": "dk~dB`cvjGvBk@h@OdAfEp@jChCs@`EiA~JuC\\KRMl@MfBYrBMVAVJ`@Tb@\\P^@rAEhB?d@B`@Ld@Nb@d@r@dArAd@j@j@`@ZP~Ab@hBp@ZVRb@f@xA^`AXVn@b@jB~@hDtAr@b@RRTZVx@x@fGJ|@Pv@d@`ArAjBj@x@d@dAFPLn@Db@@p@Et@WfBy@zEOhB@rAP`BXdA\\x@^l@|AzBxAhB`@f@f@Xp@Vl@N|AL`ADp@Nr@Vp@f@z@v@dDpCjA`AtAlAtC~BtAn@`ATv@Nv@FbB?fBU`Cq@bJqC`HuB`EuAN@\\Ff@ZZXzBxAtCn@hARnBT|HfAbGz@zRrCfRtC|ItAtG`Af@PHFRVLb@HNz@d@rFjDjGtDjAp@pD|Bv@VVx@LR?HbCiA"
 }
-
-### Coisas do mapa
-
-### Pegar o place_id
-GET http://localhost:3333/places?text=rua serra da mantiqueira, montes claros, 480
+### Criar Rota Com Um Waypoint
+POST http://localhost:3333/routes
+Content-Type: application/json
 
 
-### Pegar direções entre 2 pontos
-GET http://localhost:3333/directions?originId=ChIJqQMLQ1mrVAcRMZALfnM8ilA&destinationId=ChIJx332MqJTqwARQk4COuTDx_8
 
-#  MINHA CASA - "formatted_address": "Av. Pres. Kennedy - Montes Claros, MG, 39400-174, Brasil",
-#       "geometry": {
-#         "location": {
-#           "lat": -16.7085104,
-#           "lng": -43.86368830000001
-#         },
-#         "viewport": {
-#           "northeast": {
-#             "lat": -16.70716057010727,
-#             "lng": -43.86233847010728
-#           },
-#           "southwest": {
-#             "lat": -16.70986022989272,
-#             "lng": -43.86503812989272
-#           }
-#         }
-#       },
-#       "name": "Av. Pres. Kennedy - Montes Claros",
-#       "place_id": "ChIJqQMLQ1mrVAcRMZALfnM8ilA"
-#     }
+### Criar Rota Com Vários Waypoints
+POST http://localhost:3333/routes
+Content-Type: application/json
 
-
-# { CASA DUDA
-#       "formatted_address": "R. Serra da Mantiqueira, 480 - Morada da Serra, Montes Claros - MG, 39401-585, Brasil",
-#       "geometry": {
-#         "location": {
-#           "lat": -16.7566014,
-#           "lng": -43.8886791
-#         },
-#         "viewport": {
-#           "northeast": {
-#             "lat": -16.75529737010728,
-#             "lng": -43.88741517010728
-#           },
-#           "southwest": {
-#             "lat": -16.75799702989272,
-#             "lng": -43.89011482989272
-#           }
-#         }
-#       },
-#       "name": "R. Serra da Mantiqueira, 480 - Morada da Serra",
-#       "place_id": "ChIJx332MqJTqwARQk4COuTDx_8"
-#     }
-#   ],
+{
+  "name": "Rota Simplificada com Waypoints",
+  "sourceId": "ChIJqQMLQ1mrVAcRMZALfnM8ilA",
+  "destinationId": "ChIJx332MqJTqwARQk4COuTDx_8",
+  "distance": 7145,
+  "duration": 841,
+  "polyline": "dk~dB`cvjGvBk@h@OdAfEp@jChCs@`EiA~JuC\\KRMl@MfBYrBMVAVJ`@Tb@\\P^@rAEhB?d@B`@Ld@Nb@d@r@dArAd@j@j@`@ZP~Ab@hBp@ZVRb@f@xA^`AXVn@b@jB~@hDtAr@b@RRTZVx@x@fGJ|@Pv@d@`ArAjBj@x@d@dAFPLn@Db@@p@Et@WfBy@zEOhB@rAP`BXdA\\x@^l@|AzBxAhB`@f@f@Xp@Vl@N|AL`ADp@Nr@Vp@f@z@v@dDpCjA`AtAlAtC~BtAn@`ATv@Nv@FbB?fBU`Cq@bJqC`HuB`EuAN@\\Ff@ZZXzBxAtCn@hARnBT|HfAbGz@zRrCfRtC|ItAtG`Af@PHFRVLb@HNz@d@rFjDjGtDjAp@pD|Bv@VVx@LR?HbCiA"
+}

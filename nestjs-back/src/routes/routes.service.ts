@@ -16,10 +16,12 @@ export class RoutesService {
     @Inject('KAFKA_SERVICE')
     private kafkaService: ClientKafka,
   ) {}
+
   async create(createRouteDto: CreateRouteDto) {
     const data = await this.directionsService.getDirections(
       createRouteDto.sourceId,
       createRouteDto.destinationId,
+      createRouteDto?.waypoints?.map((wp) => wp.placeId), // Passando IDs de place dos waypoints
     );
 
     const { available_travel_modes, geocoded_waypoints, routes, request } =
@@ -45,6 +47,9 @@ export class RoutesService {
         }),
         distance: legs.distance.value,
         duration: legs.duration.value,
+        waypoints: createRouteDto.waypoints
+          ? JSON.stringify(createRouteDto.waypoints)
+          : null, // Adiciona os waypoints à rota, se houver
       },
     });
     const kafkaProducer = await this.kafkaProducerQueue.add({
